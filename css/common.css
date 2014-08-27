@@ -1,0 +1,442 @@
+@charset "UTF-8";
+/*
+
+Common.scss
+===================
+common.css Prepossessing Files. this file only use @import;
+
+*/
+/* Compass */
+/* Variables */
+/* Compass Setting */
+/* text-shadow : @include single-text-shadow*/
+/* vendor prefix */
+/* Sengoku Galaxy */
+/* font-color */
+/* background-color */
+/* images path */
+/* font-size */
+/* 標準文字サイズ */
+/* semantic font-size */
+/* z-index */
+/* Mixin */
+/*
+
+mixin
+=========================
+mixins
+
+*/
+/* RESET */
+/*
+
+_reset.scss
+=============================
+スタイルリセット
+
+*/
+body, html, div, span, p,
+a, img, b, i, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+canvas, footer, header, hgroup, menu, nav, section, summary {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  outline: 0;
+  vertical-align: baseline;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+}
+
+body, small {
+  font: 12px/1.4 sans-serif;
+}
+
+input, textarea, keygen, select, button, isindex {
+  font: 12px/1.4 sans-serif;
+}
+
+audio {
+  display: block;
+  height: 0;
+}
+
+p {
+  line-height: 1.4;
+}
+
+b {
+  font-weight: normal;
+}
+
+i {
+  display: block;
+}
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+a {
+  color: #333;
+  -webkit-touch-callout: none;
+  touch-callout: none;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 14px;
+}
+
+hr {
+  margin: 0;
+  padding: 0;
+  display: block;
+  border: none;
+  width: 100%;
+  height: 0;
+}
+
+/* Components */
+/*
+
+Base.scss
+===================
+this file only use @include;
+base dir components.
+
+*/
+/*
+
+_animations.scss
+=============================
+animation css
+
+*/
+@-webkit-keyframes animation01 {}
+/*
+
+_layout.scss
+=============================
+layout css
+
+*/
+@-webkit-keyframes anime01 {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes anime02 {
+  0% {
+    display: none;
+  }
+
+  50% {
+    display: block;
+  }
+
+  100% {
+    display: none;
+  }
+}
+.button {
+  margin: 0;
+  padding: 7px 16px;
+  background-color: #459ec7;
+  border-radius: 4px;
+  border: 1px solid #13719c;
+  display: inline-block;
+  cursor: pointer;
+  color: #fff;
+  font-family: arial;
+  font-size: 14px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #2f6627;
+}
+.button:hover {
+  background-color: #308cc9;
+}
+.button[desabled] {
+  border: 1px solid #767575;
+  background-color: #c6c6c6;
+  color: #939292;
+  text-shadow: none;
+  cursor: default;
+}
+.button[desabled]:active {
+  position: relative;
+  top: 0;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  margin: 0 auto;
+  padding: 0 0 20px;
+  background-color: #343838;
+}
+.container .modal {
+  display: table;
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  z-index: 999;
+  margin-left: -150px;
+  width: 300px;
+  height: 102px;
+  border: 4px solid #008C9E;
+  border-radius: 8px;
+  background-color: #eff7f8;
+}
+.container .modal .text {
+  display: table-cell;
+  vertical-align: middle;
+  color: #333;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.opening {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  background-color: #4e8c94;
+}
+.opening .start_button {
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  width: 120px;
+  height: 44px;
+  margin-left: -60px;
+  border: 1px solid #173940;
+  border-radius: 10px;
+  background-color: #00b4cc;
+  line-height: 44px;
+  text-align: center;
+  font-size: 18px;
+  color: #fff;
+}
+
+.header {
+  position: relative;
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 8px 12px;
+  border-bottom: 1px solid #008C9E;
+  background-color: #005F6B;
+  text-align: center;
+}
+.header::after {
+  content: "";
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+}
+.header .column {
+  display: table;
+  width: 100%;
+}
+.header .column > li {
+  display: table-cell;
+  width: 50%;
+}
+.header .column > li:last-child {
+  text-align: right;
+}
+.header .reload {
+  width: 24px;
+  height: 29px;
+  background: url(../img/reload.png) no-repeat 0 0;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+.header .time {
+  position: relative;
+  display: inline-block;
+  width: 52px;
+  text-align: right;
+  color: white;
+  font-size: 18px;
+  line-height: 28px;
+  vertical-align: 6px;
+}
+.header .time_icon {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background: url(../img/clock.png) no-repeat 0 0;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+
+#board {
+  position: relative;
+  width: 296px;
+  height: 296px;
+  margin: 0 auto;
+  border-left: 4px solid #148398;
+  border-top: 4px solid #148398;
+  border-right: 4px solid #59cce2;
+  border-bottom: 4px solid #59cce2;
+  background-color: #eff7f8;
+}
+#board.booooomb::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 296px;
+  height: 296px;
+  background: url(../img/bombkumo.png) no-repeat 0 0;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+#board::after {
+  content: "";
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+}
+#board b {
+  display: block;
+  position: relative;
+  float: left;
+  width: 32px;
+  height: 32px;
+  border-right: 1px solid #1c535a;
+  border-bottom: 1px solid #1c535a;
+  color: white;
+  font-size: 24px;
+  text-align: center;
+  line-height: 33px;
+  text-shadow: 1px 1px 1px #000, 1px -1px 1px #000, -1px 1px 1px #000, -1px -1px 1px #000, 1px 0px 1px #000, -1px 0px 1px #000, 0px -1px 1px #000, 0px 1px 1px #000;
+  width: 32px;
+  height: 32px;
+  background: url(../img/closed.jpg) no-repeat 0 0;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+#board b.opened {
+  position: relative;
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  background: none;
+}
+#board b.opened.tapped::after {
+  width: 32px;
+  height: 32px;
+  background: none;
+}
+#board b.bomb {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  background: url(../img/bomb.png) no-repeat 1px -1px;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+
+.status {
+  width: 24%;
+  margin: 8px auto;
+  padding: 4px;
+  border-left: 4px solid #148398;
+  border-top: 4px solid #148398;
+  border-right: 4px solid #59cce2;
+  border-bottom: 4px solid #59cce2;
+  background-color: #eff7f8;
+}
+.status .bomb_num {
+  color: #555;
+  font-size: 16px;
+}
+.status .bomb_num .num {
+  display: inline-block;
+  vertical-align: 6px;
+  font-weight: normal;
+}
+
+#controls {
+  width: 296px;
+  margin: 0 auto;
+  padding: 10px;
+}
+#controls .new_game {
+  display: block;
+  width: 120px;
+  margin: 0 auto;
+}
+
+.closed_button {
+  position: relative;
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+  border: 4px solid #333;
+}
+.closed_button::after, .closed_button::before {
+  display: block;
+  content: '';
+  position: absolute;
+  top: 12.5px;
+  left: 4px;
+  height: 6px;
+  width: 24px;
+  background: #333;
+  border-radius: 10px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+.closed_button::after {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
