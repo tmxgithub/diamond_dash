@@ -1,230 +1,189 @@
-(function(){
-//? あとで追記
-    var Cell = Backbone.Model.extend({
-        // セルのデフォルト設定：爆弾・セル開けたか・バリュー
+/**
+ * Minesweeper関連オブジェクトを格納するNamespace
+ */
+var DIAMONDDASH = DIAMONDDASH || {};
+
+(function(win){
+//
+    var ns = win.DIAMONDDASH || {};
+
+    ns.JemModel = Backbone.Model.extend({
         defaults: {
-            isMine: false,
-            isOpend: false,
-            value: 0,
+            colors: 0,//red,blue,green,yellow,perple
+            unDisappear: false,//消えるか消えないか
+            gridPosX: 0,// x座標
+            gridPosY: 0,// y座標
+            group: 0,// グループ
         },
-        // セルのModelの属性値を設定
-        setValue: function(){
-            this.set({value: this.get('value') + 1});
-        },
-        // セルを開けた時の設定
-        reveal: function(){
-            // isOpen trueをset
-            this.set({isOpend: true});
-            // もしisMine trueならvalidateする
-            if (this.get('isMine')) {
-                return Cells.validate();
-            }
-            //  もしvalueなければ
-            if (!this.get('value')) {
-                // feighbors近隣設定をgetして
-                _.each(this.get('neighbors'), function(cell) {
-                    // もしisOpen falseかつisMine falseなら
-                    if (!cell.get('isOpend') && !cell.get('isMine')) {
-                        // //? revealする
-                        cell.reveal();
-                    }
-                });
-            }
-            // isOpendされてるセル数とisMineされてるセル数が同じならvalidateしる
-            if (Cells.remaining().length == Cells.isMine().length) { Cells.validate(); }
+        // JemColor: function(){
+        // },
+        JemTappedColor: function(){
+            // this.get('colors');
         },
     });
 
-    var Cells = Backbone.Collection.extend({
-        model: Cell,
-        defaults: function(){
-            this.x = 9;
-            this.y = 9;
-            this.mines = 10;
-            this.gameover = false;
-
-            var cells = [];
-            for (var y = 0; y < this.y; y++) {
-                var cellRow = [];
-                for (var x = 0; x < this.x; x++) {
-                    cellRow.push(new Cell({x: x, y: y}));
-                }
-                cells.push(cellRow);
-            }
-
-            for (var y = 0; y < this.y; y++) {
-                for (var x = 0; x < this.x; x++) {
-                    var neighbors = [];
-                    for (var dy = -1; dy <= 1; dy++) {
-                        for (var dx = -1; dx <= 1; dx++) {
-                            if (cells[x+dx] && cells[x+dx][y+dy]) {
-                                neighbors.push(cells[x+dx][y+dy]);
-                            }
-                        }
-                    }
-                    cells[x][y].set({neighbors: neighbors});
+    ns.JemsCollection = Backbone.Collection.extend({
+        model: ns.JemModel,
+        properties: {
+            gridX: 7,
+            gridY: 16,
+        },
+        initialize: function() {
+            this.collection = this.JemRandomPut();
+        },
+        JemRandomPut: function(){
+            var x, y, r;
+            for(x = 0; x < this.properties.gridX; x ++) {
+                this.models[x] = [];
+                for(y = 0; y < this.properties.gridY; y ++) {
+                    r = Math.round(Math.random() * 4);
+                    var JemModel = new ns.JemModel({gridPosX: x, gridPosY: y, colors: r});
+                    this.models[x][y] = JemModel;
                 }
             }
-            var mines = this.mines;
-            while (mines) {
-                var x = Math.floor(this.x * Math.random());
-                var y = Math.floor(this.y * Math.random());
-
-                if (!cells[x][y].get('isMine')) {
-                    cells[x][y].set({isMine: true});
-                    _.each(cells[x][y].get('neighbors'), function(cell) { cell.setValue() });
-                    mines--;
-                }
-            }
-            for (var length = cells.length; 0 < length; length--) {
-                var row = cells.shift();
-                _.each(row, function(cell) { cells.push(cell); });
-            }
-            return cells;
-        },
-        initialize: function(){
-            this.add(this.defaults());
-        },
-        // セルのisOpendをgetしてそれ以外を除外
-        isOpend: function(){
-            return this.filter(function(cell) {return cell.get('isOpend');});
-        },
-        // 空いたセルにisOpend実行
-        remaining: function(){
-            return this.without.apply(this, this.isOpend());
-        },
-        isMine: function(){
-            return this.filter(function(cell) { return cell.get('isMine') });
-        },
-        row: function(row) {
-            return this.filter(function(cell) { return cell.get('y') == row; });
-        },
-        validate: function(clicked) {
-            if (this.gameover) { return; }
-            var remaining = this.remaining();
-            var isMine = this.isMine();
-
-            if (
-                (remaining.length == isMine.length) &&
-                (remaining.every(function(f,i){return f == isMine[i]}))
-            ) {
-                notify('You win!');
-            }  else {
-                notify('You lose!');
-            }
-            this.revealMines();
-            this.gameover = true;
-        },
-        revealMines: function(){
-            $.each(this.isMine(), function(){this.set({isOpend: true})});
-        },
-    });
-
-    function notify(message) {
-        setTimeout(function(){ alert(message) }, 100);
-    }
-
-    var Cells = new Cells;
-
-    var CellView = Backbone.View.extend({
-        tagName: 'b',
-        template: _.template('<% if (isOpend && !isMine && value) { return value } %>'),
-        events: {
-            'click': 'reveal',
-        },
-        initialize: function(){
-            // オブザーバパターンを利用してモデルのイベントを購読
-            this.model.bind('change', this.render, this);
-        },
-        render: function(){
-            this.$el.html(this.template(this.model.toJSON()));
-            this.$el.toggleClass('opened', this.model.get('isOpend'));
-            this.$el.toggleClass('bomb',
-                (this.model.get('isOpend')) && this.model.get('isMine'));
             return this;
         },
-        reveal: function(){
-            this.model.reveal();
+        JemNeighbors: function(){
+            var x, y;
+            for (x = 0; x < this.properties.gridX; x++) {
+                this.models[x] = [];
+                for (y = 0; y < this.properties.gridY; y++) {
+                    // var neighbors = [];
+                    // for (var dx = -1; dx <= 1; dx++) {
+                    //     for (var dy = -1; dy <= 1; dy++) {
+                    //         if (this.models[x+dx] && this.models[x+dx][y+dy]) {
+                    //             this.models[x][y].set({group: x,unDisappear: true});
+                    //         }
+                    //     }
+                    // }
+                    // this.models[x][y].set({neighbors: x});
+                    // if(this.models[x][y].get('colors') == this.models[x][y - 1].get('colors')){
+                    //     this.models[x][y].set({unDisappear: true});
+                    // }
+                }
+            }
+            return this;
         },
+        getColors: function(){
+            // var x, y, r;
+            // for(x = 0; x < this.properties.gridX; x ++) {
+            //     this.models[x] = [];
+            //     for(y = 0; y < this.properties.gridY; y ++) {
+            //         r = Math.round(Math.random() * 4);
+            //         var JemModel = new ns.JemModel({gridPosX: x, gridPosY: y, colors: r});
+            //         this.models[x][y] = JemModel;
+            //     }
+            // }
+            // return this;
+        }
     });
+// console.log(this.model.toJSON());
+    var JemsCollection = new ns.JemsCollection().JemNeighbors();
+    console.log(JemsCollection);
+    // var JemView = new ns.JemView();
+})(this);
 
-    // var TimeStatusView = Backbone.View.extend({
-    //     el: $('#time'),
-    //     properties: {
-    //         min: 0,
-    //         sec: 0,
-    //         timerId: undefined,
-    //     },
-    //     initialize: function(){
-    //         this.startTime();
-    //     },
-    //     startTime: function(){
-    //         var self = this;
-    //         setTimeout(function(){
-    //             self.countUp();
-    //         }, 1000);
-    //     },
-    //     stopTime: function(){
-    //     },
-    //     countUp: function(){
-    //         var prop = this.properties;
-    //         prop.sec++;
-    //         if(prop.sec == 60) {
-    //             prop.min++;
-    //             prop.sec = 0;
-    //         }
-    //         this.render();
-    //     },
-    //     render: function(){
-    //         this.$el.append();
-    //     }
-    // });
 
-    var GameView = Backbone.View.extend({
-        el: $('#game'),
+/**
+ * jemview
+ */
+(function(win){
+    //
+    var ns = win.DIAMONDDASH || {};
+
+    ns.JemView = Backbone.View.extend({
+        tagName: 'li',
+        className: 'jem',
         events: {
-            // 'click #validate': 'validate',
-            'click #new': 'new_game',
+            'click .jem': 'destroy',
+            'click': 'clickHandler',
         },
-        initialize: function(){
-            Cells.bind('all', this.render, this);
-            Cells.bind('reset', this.reset, this);
-            this.addAll();
-            this.render();
+        initialize: function() {
+            // this.listenTo(this.model, 'destroy', this.render);
+            // this.listenTo(this.collections, 'change', this.render);
         },
-        reset: function(){
-            this.removeAll();
-            this.addAll();
-            this.render();
+        destroy: function(){
+            this.$el.addClass('anm_deleted');
+            this.$el.destroy();
+            // this.trigger('', event, this);
+        },
+        clickHandler: function(event){
+            // this.trigger('', event, this);
+            return this;
         },
         render: function(){
-            var isOpend = Cells.isOpend().length;
-            var remaining = Cells.remaining().length;
-            var isMine = Cells.mines;
+            return this;
         },
-        new_game: function(){
-            Cells.reset( Cells.defaults() );
-        },
-        addCell: function(cell) {
-            var cellView = new CellView({model: cell});
-            this.$('#board').append(cellView.render().el);
-        },
-        addRow: function(row) {
-            _.each(Cells.row(row), this.addCell);
-        },
-        addAll: function(){
-            for (var row = 0; row < Cells.y; row++) {
-                this.addRow(row);
-            }
-        },
-        removeAll: function(){
-            this.$('#board b').remove();
-        },
-        // validate: function(){
-        //     Cells.validate(true);
-        // },
     });
 
-    var Game = new GameView();
+    var JemView = new ns.JemView();
+    // console.log(JemView.el);
+})(this);
 
+
+/**
+ * jemリストview
+ */
+(function(win){
+    //
+    var ns = win.DIAMONDDASH || {};
+
+    ns.JemsView = Backbone.View.extend({
+        el: $('#grid'),
+        initialize: function() {
+            this.collection = new ns.JemsCollection();
+        },
+        // render: function(){
+        //     var JemView = new ns.JemView({model: ns.JemModel});
+        //     this.$el.append(JemView.render().el);
+        //     return this;
+        // },
+        render: function() {
+            var lis = [];
+            var id = 0;
+            for(var y = 0; y < this.collection.properties.gridY; y ++) {
+                for(var x = 0; x < this.collection.properties.gridX; x ++) {
+                    lis[id] = new ns.JemView(this.collection.models[x][y]);
+                    lis[id].$el.addClass("color_" + lis[id].attributes.colors);
+                    lis[id].$el.addClass("gridX" + lis[id].attributes.gridPosX);
+                    lis[id].$el.addClass("gridY" + lis[id].attributes.gridPosY);
+                    // lis[id].on('blockClick', $.proxy(this.blockGroupDelete, this));
+                    this.$el.append(lis[id].el);
+                    id ++;
+                }
+            }
+        },
+    });
+    // var JemsView = new ns.JemsView().render();
+    // console.log(JemsView.render());
+
+})(this);
+
+(function(win){
+    //
+    var ns = win.DIAMONDDASH || {};
+
+    ns.GameView = Backbone.View.extend({
+        el: $('#game'),
+        initialize: function() {
+            // var JemsView = new ns.JemsView();
+        },
+        render: function(){
+            var JemsView = new ns.JemsView();
+            this.$('#grid').append(JemsView.render());
+            return this;
+        },
+    });
+    // var Game = new ns.GameView();
+    // ns.Game = new DIAMONDDASH.GameView();
+    // console.log(Game.render().el);
+
+})(this);
+
+/**
+ * GameController起動
+ */
+(function(win) {
+    var Game = new DIAMONDDASH.GameView();
+    console.log(Game.render().toJSON());
 })(this);
