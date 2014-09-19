@@ -43,30 +43,16 @@ var DIAMONDDASH = DIAMONDDASH || {};
             }
             return this;
         },
-        JemNeighbors: function(){
-            var x, y;
-            for (x = 0; x < this.properties.gridX; x++) {
-                this.models[x] = [];
-                for (y = 0; y < this.properties.gridY; y++) {
-                    // var neighbors = [];
-                    // for (var dx = -1; dx <= 1; dx++) {
-                    //     for (var dy = -1; dy <= 1; dy++) {
-                    //         if (this.models[x+dx] && this.models[x+dx][y+dy]) {
-                    //             this.models[x][y].set({group: x,unDisappear: true});
-                    //         }
-                    //     }
-                    // }
-                    // this.models[x][y].set({neighbors: x});
-                    if(this.models[x][y].get('colors') == this.models[x][y - 1].get('colors')){
-                        this.models[x][y].set({unDisappear: true});
-                    }
-                }
-            }
-            return this;
+        JemNeighbor: function(){
         },
-// console.log(this.model.toJSON());
-    var JemsCollection = new ns.JemsCollection().JemNeighbors();
-    console.log(JemsCollection);
+        JemHasColors: function(){
+        },
+        JemDelete: function(){
+        },
+        JemUpdatePut: function(){
+        },
+    });
+    var JemsCollection = new ns.JemsCollection();
     // var JemView = new ns.JemView();
 })(this);
 
@@ -109,7 +95,7 @@ var DIAMONDDASH = DIAMONDDASH || {};
 
 
 /**
- * jemリストview
+ * JemsView
  */
 (function(win){
     //
@@ -146,6 +132,10 @@ var DIAMONDDASH = DIAMONDDASH || {};
 
 })(this);
 
+
+/**
+ * GameView
+ */
 (function(win){
     //
     var ns = win.DIAMONDDASH || {};
@@ -171,6 +161,6 @@ var DIAMONDDASH = DIAMONDDASH || {};
  * GameController起動
  */
 (function(win) {
-    var Game = new DIAMONDDASH.GameView();
-    console.log(Game.render().toJSON());
+    var Game = new DIAMONDDASH.GameView().render();
+    // console.log(Game.render());
 })(this);
