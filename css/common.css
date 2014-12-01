@@ -327,7 +327,7 @@ body {
   width: 42px;
   height: 42px;
 }
-#grid > li.jem {
+#grid > li.gem {
   position: absolute;
   width: 42px;
   height: 42px;
@@ -340,89 +340,500 @@ body {
   background-size: cover;
   transition: all 0.2s ease-in-out 0.2s;
 }
-#grid > li.jem.color_0 {
+#grid > li.gem.color_0 {
   background-position: 0 0;
 }
-#grid > li.jem.color_1 {
+#grid > li.gem.color_1 {
   background-position: -42px 0;
 }
-#grid > li.jem.color_2 {
+#grid > li.gem.color_2 {
   background-position: -84px 0;
 }
-#grid > li.jem.color_3 {
+#grid > li.gem.color_3 {
   background-position: -126px 0;
 }
-#grid > li.jem.color_4 {
+#grid > li.gem.color_4 {
   background-position: -168px 0;
 }
-#grid > li.jem.gridX0 {
+#grid > li.gem.X0_Y0 {
+  bottom: 0;
   left: 0;
 }
-#grid > li.jem.gridX1 {
+#grid > li.gem.X0_Y1 {
+  bottom: 42px;
+  left: 0;
+}
+#grid > li.gem.X0_Y2 {
+  bottom: 84px;
+  left: 0;
+}
+#grid > li.gem.X0_Y3 {
+  bottom: 126px;
+  left: 0;
+}
+#grid > li.gem.X0_Y4 {
+  bottom: 168px;
+  left: 0;
+}
+#grid > li.gem.X0_Y5 {
+  bottom: 210px;
+  left: 0;
+}
+#grid > li.gem.X0_Y6 {
+  bottom: 252px;
+  left: 0;
+}
+#grid > li.gem.X0_Y7 {
+  bottom: 294px;
+  left: 0;
+}
+#grid > li.gem.X0_Y8 {
+  bottom: 336px;
+  left: 0;
+}
+#grid > li.gem.X0_Y9 {
+  bottom: 378px;
+  left: 0;
+}
+#grid > li.gem.X0_Y10 {
+  bottom: 420px;
+  left: 0;
+}
+#grid > li.gem.X0_Y11 {
+  bottom: 462px;
+  left: 0;
+}
+#grid > li.gem.X0_Y12 {
+  bottom: 504px;
+  left: 0;
+}
+#grid > li.gem.X0_Y13 {
+  bottom: 546px;
+  left: 0;
+}
+#grid > li.gem.X0_Y13 {
+  bottom: 588px;
+  left: 0;
+}
+#grid > li.gem.X0_Y14 {
+  bottom: 630px;
+  left: 0;
+}
+#grid > li.gem.X0_Y15 {
+  bottom: 672px;
+  left: 0;
+}
+#grid > li.gem.X1_Y0 {
+  bottom: 0;
   left: 42px;
 }
-#grid > li.jem.gridX2 {
+#grid > li.gem.X1_Y1 {
+  bottom: 42px;
+  left: 42px;
+}
+#grid > li.gem.X1_Y2 {
+  bottom: 84px;
+  left: 42px;
+}
+#grid > li.gem.X1_Y3 {
+  bottom: 126px;
+  left: 42px;
+}
+#grid > li.gem.X1_Y4 {
+  bottom: 168px;
+  left: 42px;
+}
+#grid > li.gem.X1_Y5 {
+  bottom: 210px;
+  left: 42px;
+}
+#grid > li.gem.X1_Y6 {
+  bottom: 252px;
+  left: 42px;
+}
+#grid > li.gem.X1_Y7 {
+  bottom: 294px;
+  left: 42px;
+}
+#grid > li.gem.X1_Y8 {
+  bottom: 336px;
+  left: 42px;
+}
+#grid > li.gem.X1_Y9 {
+  bottom: 378px;
+  left: 42px;
+}
+#grid > li.gem.X1_Y10 {
+  bottom: 420px;
+  left: 42px;
+}
+#grid > li.gem.X1_Y11 {
+  bottom: 462px;
+  left: 42px;
+}
+#grid > li.gem.X1_Y12 {
+  bottom: 504px;
+  left: 42px;
+}
+#grid > li.gem.X1_Y13 {
+  bottom: 546px;
+  left: 42px;
+}
+#grid > li.gem.X1_Y13 {
+  bottom: 588px;
+  left: 42px;
+}
+#grid > li.gem.X1_Y14 {
+  bottom: 630px;
+  left: 42px;
+}
+#grid > li.gem.X1_Y15 {
+  bottom: 672px;
+  left: 42px;
+}
+#grid > li.gem.X1_Y0 {
+  bottom: 0;
+  left: 42px;
+}
+#grid > li.gem.X2_Y0 {
+  bottom: 0;
   left: 84px;
 }
-#grid > li.jem.gridX3 {
+#grid > li.gem.X2_Y1 {
+  bottom: 42px;
+  left: 84px;
+}
+#grid > li.gem.X2_Y2 {
+  bottom: 84px;
+  left: 84px;
+}
+#grid > li.gem.X2_Y3 {
+  bottom: 126px;
+  left: 84px;
+}
+#grid > li.gem.X2_Y4 {
+  bottom: 168px;
+  left: 84px;
+}
+#grid > li.gem.X2_Y5 {
+  bottom: 210px;
+  left: 84px;
+}
+#grid > li.gem.X2_Y6 {
+  bottom: 252px;
+  left: 84px;
+}
+#grid > li.gem.X2_Y7 {
+  bottom: 294px;
+  left: 84px;
+}
+#grid > li.gem.X2_Y8 {
+  bottom: 336px;
+  left: 84px;
+}
+#grid > li.gem.X2_Y9 {
+  bottom: 378px;
+  left: 84px;
+}
+#grid > li.gem.X2_Y10 {
+  bottom: 420px;
+  left: 84px;
+}
+#grid > li.gem.X2_Y11 {
+  bottom: 462px;
+  left: 84px;
+}
+#grid > li.gem.X2_Y12 {
+  bottom: 504px;
+  left: 84px;
+}
+#grid > li.gem.X2_Y13 {
+  bottom: 546px;
+  left: 84px;
+}
+#grid > li.gem.X2_Y13 {
+  bottom: 588px;
+  left: 84px;
+}
+#grid > li.gem.X2_Y14 {
+  bottom: 630px;
+  left: 84px;
+}
+#grid > li.gem.X2_Y15 {
+  bottom: 672px;
+  left: 84px;
+}
+#grid > li.gem.X3_Y0 {
+  bottom: 0;
   left: 126px;
 }
-#grid > li.jem.gridX4 {
+#grid > li.gem.X3_Y1 {
+  bottom: 42px;
+  left: 126px;
+}
+#grid > li.gem.X3_Y2 {
+  bottom: 84px;
+  left: 126px;
+}
+#grid > li.gem.X3_Y3 {
+  bottom: 126px;
+  left: 126px;
+}
+#grid > li.gem.X3_Y4 {
+  bottom: 168px;
+  left: 126px;
+}
+#grid > li.gem.X3_Y5 {
+  bottom: 210px;
+  left: 126px;
+}
+#grid > li.gem.X3_Y6 {
+  bottom: 252px;
+  left: 126px;
+}
+#grid > li.gem.X3_Y7 {
+  bottom: 294px;
+  left: 126px;
+}
+#grid > li.gem.X3_Y8 {
+  bottom: 336px;
+  left: 126px;
+}
+#grid > li.gem.X3_Y9 {
+  bottom: 378px;
+  left: 126px;
+}
+#grid > li.gem.X3_Y10 {
+  bottom: 420px;
+  left: 126px;
+}
+#grid > li.gem.X3_Y11 {
+  bottom: 462px;
+  left: 126px;
+}
+#grid > li.gem.X3_Y12 {
+  bottom: 504px;
+  left: 126px;
+}
+#grid > li.gem.X3_Y13 {
+  bottom: 546px;
+  left: 126px;
+}
+#grid > li.gem.X3_Y13 {
+  bottom: 588px;
+  left: 126px;
+}
+#grid > li.gem.X3_Y14 {
+  bottom: 630px;
+  left: 126px;
+}
+#grid > li.gem.X3_Y15 {
+  bottom: 672px;
+  left: 126px;
+}
+#grid > li.gem.X4_Y0 {
+  bottom: 0;
   left: 168px;
 }
-#grid > li.jem.gridX5 {
+#grid > li.gem.X4_Y1 {
+  bottom: 42px;
+  left: 168px;
+}
+#grid > li.gem.X4_Y2 {
+  bottom: 84px;
+  left: 168px;
+}
+#grid > li.gem.X4_Y3 {
+  bottom: 126px;
+  left: 168px;
+}
+#grid > li.gem.X4_Y4 {
+  bottom: 168px;
+  left: 168px;
+}
+#grid > li.gem.X4_Y5 {
+  bottom: 210px;
+  left: 168px;
+}
+#grid > li.gem.X4_Y6 {
+  bottom: 252px;
+  left: 168px;
+}
+#grid > li.gem.X4_Y7 {
+  bottom: 294px;
+  left: 168px;
+}
+#grid > li.gem.X4_Y8 {
+  bottom: 336px;
+  left: 168px;
+}
+#grid > li.gem.X4_Y9 {
+  bottom: 378px;
+  left: 168px;
+}
+#grid > li.gem.X4_Y10 {
+  bottom: 420px;
+  left: 168px;
+}
+#grid > li.gem.X4_Y11 {
+  bottom: 462px;
+  left: 168px;
+}
+#grid > li.gem.X4_Y12 {
+  bottom: 504px;
+  left: 168px;
+}
+#grid > li.gem.X4_Y13 {
+  bottom: 546px;
+  left: 168px;
+}
+#grid > li.gem.X4_Y13 {
+  bottom: 588px;
+  left: 168px;
+}
+#grid > li.gem.X4_Y14 {
+  bottom: 630px;
+  left: 168px;
+}
+#grid > li.gem.X4_Y15 {
+  bottom: 672px;
+  left: 168px;
+}
+#grid > li.gem.X5_Y0 {
+  bottom: 0;
   left: 210px;
 }
-#grid > li.jem.gridX6 {
+#grid > li.gem.X5_Y1 {
+  bottom: 42px;
+  left: 210px;
+}
+#grid > li.gem.X5_Y2 {
+  bottom: 84px;
+  left: 210px;
+}
+#grid > li.gem.X5_Y3 {
+  bottom: 126px;
+  left: 210px;
+}
+#grid > li.gem.X5_Y4 {
+  bottom: 168px;
+  left: 210px;
+}
+#grid > li.gem.X5_Y5 {
+  bottom: 210px;
+  left: 210px;
+}
+#grid > li.gem.X5_Y6 {
+  bottom: 252px;
+  left: 210px;
+}
+#grid > li.gem.X5_Y7 {
+  bottom: 294px;
+  left: 210px;
+}
+#grid > li.gem.X5_Y8 {
+  bottom: 336px;
+  left: 210px;
+}
+#grid > li.gem.X5_Y9 {
+  bottom: 378px;
+  left: 210px;
+}
+#grid > li.gem.X5_Y10 {
+  bottom: 420px;
+  left: 210px;
+}
+#grid > li.gem.X5_Y11 {
+  bottom: 462px;
+  left: 210px;
+}
+#grid > li.gem.X5_Y12 {
+  bottom: 504px;
+  left: 210px;
+}
+#grid > li.gem.X5_Y13 {
+  bottom: 546px;
+  left: 210px;
+}
+#grid > li.gem.X5_Y13 {
+  bottom: 588px;
+  left: 210px;
+}
+#grid > li.gem.X5_Y14 {
+  bottom: 630px;
+  left: 210px;
+}
+#grid > li.gem.X5_Y15 {
+  bottom: 672px;
+  left: 210px;
+}
+#grid > li.gem.X6_Y0 {
+  bottom: 0;
   left: 252px;
 }
-#grid > li.jem.gridY0 {
-  bottom: 0;
-}
-#grid > li.jem.gridY1 {
+#grid > li.gem.X6_Y1 {
   bottom: 42px;
+  left: 252px;
 }
-#grid > li.jem.gridY2 {
+#grid > li.gem.X6_Y2 {
   bottom: 84px;
+  left: 252px;
 }
-#grid > li.jem.gridY3 {
+#grid > li.gem.X6_Y3 {
   bottom: 126px;
+  left: 252px;
 }
-#grid > li.jem.gridY4 {
+#grid > li.gem.X6_Y4 {
   bottom: 168px;
+  left: 252px;
 }
-#grid > li.jem.gridY5 {
+#grid > li.gem.X6_Y5 {
   bottom: 210px;
+  left: 252px;
 }
-#grid > li.jem.gridY6 {
+#grid > li.gem.X6_Y6 {
   bottom: 252px;
+  left: 252px;
 }
-#grid > li.jem.gridY7 {
+#grid > li.gem.X6_Y7 {
   bottom: 294px;
+  left: 252px;
 }
-#grid > li.jem.gridY8 {
+#grid > li.gem.X6_Y8 {
   bottom: 336px;
+  left: 252px;
 }
-#grid > li.jem.gridY9 {
+#grid > li.gem.X6_Y9 {
   bottom: 378px;
+  left: 252px;
 }
-#grid > li.jem.gridY10 {
+#grid > li.gem.X6_Y10 {
   bottom: 420px;
+  left: 252px;
 }
-#grid > li.jem.gridY11 {
+#grid > li.gem.X6_Y11 {
   bottom: 462px;
+  left: 252px;
 }
-#grid > li.jem.gridY12 {
+#grid > li.gem.X6_Y12 {
   bottom: 504px;
+  left: 252px;
 }
-#grid > li.jem.gridY13 {
+#grid > li.gem.X6_Y13 {
   bottom: 546px;
+  left: 252px;
 }
-#grid > li.jem.gridY14 {
+#grid > li.gem.X6_Y13 {
   bottom: 588px;
+  left: 252px;
 }
-#grid > li.jem.gridY15 {
+#grid > li.gem.X6_Y14 {
   bottom: 630px;
+  left: 252px;
+}
+#grid > li.gem.X6_Y15 {
+  bottom: 672px;
+  left: 252px;
 }
 
 .status {
@@ -492,7 +903,7 @@ body {
   }
 }
 .anm_deleted {
-  -moz-animation: animation_deleted 0.5s infinite ease-in-out;
-  -webkit-animation: animation_deleted 0.5s infinite ease-in-out;
-  animation: animation_deleted 0.5s infinite ease-in-out;
+  -moz-animation: animation_deleted 0.3s ease-in-out;
+  -webkit-animation: animation_deleted 0.3s ease-in-out;
+  animation: animation_deleted 0.3s ease-in-out;
 }
