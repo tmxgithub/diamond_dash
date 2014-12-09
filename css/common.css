@@ -307,9 +307,12 @@ body {
   position: absolute;
   top: 43px;
   left: 12px;
-  width: 268px;
+  width: 295px;
   height: 24px;
   padding: 3px 10px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
   color: yellow;
   font-weight: bold;
   font-size: 20px;
@@ -331,18 +334,6 @@ body {
   z-index: 100;
   background-image: -webkit-linear-gradient(#2f2d1d 1px, transparent 0px), -webkit-linear-gradient(0, #2f2d1d 1px, transparent 1px);
   background-size: 2px 2px, 2px 2px;
-}
-.header .reload {
-  position: absolute;
-  top: 40px;
-  right: 10px;
-  width: 30px;
-  height: 30px;
-  background: url(../img/reload.jpg) no-repeat 0 0;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  -webkit-background-size: cover;
-  background-size: cover;
 }
 
 #grid {
