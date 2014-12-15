@@ -173,7 +173,7 @@ body {
 }
 .button {
   margin: 0;
-  padding: 7px 16px;
+  padding: 7x 16px;
   background-color: #459ec7;
   border-radius: 4px;
   border: 1px solid #13719c;
@@ -322,6 +322,20 @@ body {
   float: right;
   display: inline-block;
   text-align: right;
+}
+.header .score > b.result {
+  float: none;
+  height: 40px;
+  position: absolute;
+  z-index: 1000;
+  top: 120px;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: 10px auto;
+  line-height: 40px;
+  font-size: 40px;
+  text-align: center;
 }
 .header .score::after {
   content: ' ';

@@ -13,11 +13,11 @@ var DIAMONDDASH = DIAMONDDASH || {};
     ns.Gem = Backbone.Model.extend({
         defaults: {
             colors: 0,//red,blue,green,yellow,perple
-            erasable: false,//
-            gridPosX: 0,//
-            gridPosY: 0,//
-            id: 'id0_0',//
-            group: undefined,//
+            erasable: false,
+            gridPosX: 0,
+            gridPosY: 0,
+            id: 'id0_0',
+            group: undefined,
         }
     });
 
@@ -26,7 +26,6 @@ var DIAMONDDASH = DIAMONDDASH || {};
         properties: {
             gridX: 7,
             gridY: 16,
-            resetFlg: false
         },
         initialize: function(gemsView) {
             this.collection = this.createGemRandom();
@@ -34,7 +33,7 @@ var DIAMONDDASH = DIAMONDDASH || {};
             this.group = 0;
             this.erasableGemCount = 0;
             this.sameGemCount = 0;
-            this.gemsUpdateStatus(gemsView);
+            this.updateGemStauts(gemsView);
         },
         createGemRandom: function(){
             var x, y, r;
@@ -67,7 +66,7 @@ var DIAMONDDASH = DIAMONDDASH || {};
                 }
             }
         },
-        gemsUpdateStatus: function(gemsView){
+        updateGemStauts: function(gemsView){
             var x, y;
             var i = 0;
             this.group = 0;
@@ -204,15 +203,13 @@ var DIAMONDDASH = DIAMONDDASH || {};
                 for(x = 0; x < this.collection.properties.gridX; x ++) {
                     lis[id] = new ns.GemView(this.collection.models[x][y]);
                     lis[id].$el.addClass("color_" + lis[id].attributes.colors);
-                    lis[id].listenTo(lis[id], 'gemClick', $.proxy(this.gemGroupDelete, this));
+                    lis[id].listenTo(lis[id], 'gemClick', $.proxy(this.deleteGemGroup, this));
                     this.$el.append(lis[id].el);
                     id ++;
                 }
             }
         },
-        gemGroupDelete: function(event, self) {
-            // console.log(this);
-            // console.log(self);
+        deleteGemGroup: function(event, self) {
             var deletedGems = [];
             var i = 0;
             var x, y;
@@ -221,9 +218,6 @@ var DIAMONDDASH = DIAMONDDASH || {};
                     if(this.collection.models[x][y] == undefined) {continue};
                     if(this.collection.models[x][y].get('group') == undefined) {continue};
                     if(this.collection.models[x][y].get('group') == self.attributes.group && this.collection.models[x][y].get('erasable') == true) {
-                        // var expTop = Number($('#id' + x + '_' + y).css('top').slice(0, -2)) - 10;
-                        // var expLeft = Number($('#id' + x + '_' + y).css('left').slice(0, -2)) - 10;
-                        // var expId = this.collection.models[x][y].get('group');
                         // $('#id' + x + '_' + y).addClass('anm_deleted');
                         // $('#id' + x + '_' + y).removeClass('anm_deleted');
                         $('#id' + x + '_' + y).remove();
@@ -234,14 +228,15 @@ var DIAMONDDASH = DIAMONDDASH || {};
                     }
                 }
             }
+            //修正 ここで毎回newしなくていい。
             var scoreView = new ns.ScoreView(deletedGems);
             this.gemFall(deletedGems, self);
         },
         gemFall: function(deletedGems, view) {
-            var gemXY = this.setFallGem(deletedGems);
+            var gemXY = this.updateAddGemStauts(deletedGems);
             this.gemFallRender(view, gemXY);
         },
-        setFallGem: function(deletedGems) {
+        updateAddGemStauts: function(deletedGems) {
             var x = [];
             var y_x = [];
             var i;
@@ -288,7 +283,7 @@ var DIAMONDDASH = DIAMONDDASH || {};
             var fallY_now;
             var fallY_min;
             var fallCount;
-            var emptyBlocks = [];
+            var emptyGrid = [];
             var addBlocks = [];
             for(n = 0; n < this.collection.properties.gridX; n ++) {
                 if(gemXY[0][n] != 0) {
@@ -304,7 +299,7 @@ var DIAMONDDASH = DIAMONDDASH || {};
                         this.collection.models[n][fallY_now].set('id', 'id' + n + '_' + (fallY_max - fallCount));
                         this.collection.models[n][(fallY_max - fallCount)] = this.collection.models[n][fallY_now];
                         delete this.collection.models[n][fallY_now];
-                        emptyBlocks.push([n, fallY_now]);
+                        emptyGrid.push([n, fallY_now]);
                         addBlocks.push([n, (fallY_max - fallCount)]);
                         fallCount ++;
                     }
@@ -315,39 +310,38 @@ var DIAMONDDASH = DIAMONDDASH || {};
                         this.collection.models[n][fallY_min].set('id', 'id' + n + '_' + (fallY_min + gemXY[0][n]));
                         this.collection.models[n][(fallY_min + gemXY[0][n])] = this.collection.models[n][fallY_min];
                         delete this.collection.models[n][fallY_min];
-                        emptyBlocks.push([n, fallY_min]);
+                        emptyGrid.push([n, fallY_min]);
                         addBlocks.push([n, (fallY_min + gemXY[0][n])]);
                     }
                 }
             }
-            _.each(emptyBlocks, function(num, index) {
-                emptyBlocks[index] = num.toString();
+            _.each(emptyGrid, function(num, index) {
+                emptyGrid[index] = num.toString();
             });
             _.each(addBlocks, function(num, index) {
-                delete emptyBlocks[_.indexOf(emptyBlocks, num.toString())];
+                delete emptyGrid[_.indexOf(emptyGrid, num.toString())];
             });
-            this.collection.gemsUpdateStatus(this);
-            this.gemMakeMargin(emptyBlocks);
+            this.collection.updateGemStauts(this);
+            this.addGem(emptyGrid);
         },
-        gemMakeMargin: function(emptyBlocks) {
-            var addBlocksArray = [];
-            _.each(emptyBlocks, function(num, index) {
-                addBlocksArray.push(num.split(","));
+        addGem: function(emptyGrid) {
+            var addGemsArray = [];
+            _.each(emptyGrid, function(num, index) {
+                addGemsArray.push(num.split(","));
             });
             var id = 0;
             var lis = [];
             var r;
             var gemModel;
-            _.each(addBlocksArray, function(num, index) {
+            _.each(addGemsArray, function(num, index) {
                 id = Number(num[0]) + (Number(num[1]) * this.collection.properties.gridX);
                 r = Math.round(Math.random() * 4);
                 gemModel = new ns.Gem({id: 'id' + Number(num[0]) +'_'+ Number(num[1]), colors: r, gridPosX: Number(num[0]), gridPosY: Number(num[1])});
                 this.collection.models[Number(num[0])][Number(num[1])] = gemModel;
                 lis[id] = new ns.GemView(gemModel);
                 lis[id].$el.addClass("color_" + lis[id].attributes.colors);
-                lis[id].listenTo(lis[id], 'gemClick', $.proxy(this.gemGroupDelete, this));
+                lis[id].listenTo(lis[id], 'gemClick', $.proxy(this.deleteGemGroup, this));
                 this.$el.append(lis[id].el);
-                // lis[id].$el.addClass('anm_deleted');
             }, this);
         }
     });
@@ -363,15 +357,12 @@ var DIAMONDDASH = DIAMONDDASH || {};
     ns.TimeCountView = Backbone.View.extend({
         el: $('.second'),
         properties: {
-            sec: 60,
+            nowSec: 60,
+            currentSec: 60,
             timerId: undefined
         },
         initialize: function() {
-            // this.collection = new ns.BlockCollection();
-            // this.countDown();
             this.render();
-            this.$el.html(this.properties.sec);
-            $('.meter').attr('value', this.properties.sec);
         },
         start: function() {
             var self = this;
@@ -383,30 +374,29 @@ var DIAMONDDASH = DIAMONDDASH || {};
             clearInterval(this.properties.timerId);
         },
         countDown: function() {
-            var prop = this.properties;
-            prop.sec--;
+            this.properties.nowSec--;
             var target = $('.meter');
-            target.attr('value', prop.sec);
+            target.attr('value', this.properties.nowSec);
             this.render();
-            if(prop.sec === 0) {
+            if(this.properties.nowSec === 0) {
                 $('#mask_layer').show();
                 $('#timeup').show();
                 $('.re_start').show();
-                // this.render();
-                this.$el.html(60);
-                $('.meter').attr('value', 60);
+                this.$el.html(this.properties.currentSec);
+                $('.meter').attr('value', this.properties.currentSec);
+                $('#score_point').addClass('result');
                 this.clear();
             }
         },
         clear: function() {
             this.stop();
-            this.properties.sec = 60;
-            this.$el.html(60);
-            // console.log(this.properties.sec);
+            this.properties.nowSec = this.properties.currentSec;
+            this.$el.html(this.properties.currentSec);
+            // console.log(this.properties.nowSec);
         },
         render: function() {
-            this.$el.html(this.properties.sec);
-            console.log(this.properties.sec);
+            this.$el.html(this.properties.nowSec);
+            $('.meter').attr('value', this.properties.nowSec);
         }
     });
 })(this);
@@ -426,18 +416,24 @@ var DIAMONDDASH = DIAMONDDASH || {};
             deletedGemCount: 0
         },
         initialize: function(deletedGems) {
-            if(deletedGems != undefined) {
+            this.scoreUpdate(deletedGems);
+            this.render();
+        },
+        scoreUpdate: function(deletedGems){
+            if(deletedGems !== undefined) {
                 this.deletedGemCount = deletedGems.length;
-                this.$el.html(this.properties.gameScore);
-                this.render();
+                this.properties.gameScore += this.deletedGemCount * 100;
                 console.log(this.deletedGemCount);
             }else{
                 this.$el.html(this.properties.gameScore);
                 this.properties.gameScore = 0;
             }
         },
+        scoreClear: function() {
+            this.properties.gameScore = 0;
+            this.$el.html(this.properties.gameScore);
+        },
         render: function() {
-            this.properties.gameScore += this.deletedGemCount * 100;
             this.$el.html(this.properties.gameScore);
         }
     });
@@ -459,7 +455,6 @@ var DIAMONDDASH = DIAMONDDASH || {};
             this.gemsView = new ns.GemsView();
             this.gameStart();
             this.gameRetry();
-            return this;
         },
         gameStart: function() {
             var self = this;
@@ -475,12 +470,10 @@ var DIAMONDDASH = DIAMONDDASH || {};
                 $('#mask_layer').hide();
                 $('#timeup').hide();
                 $('.re_start').hide();
+                $('#score_point').removeClass('result');
+                self.scoreView.scoreClear();
                 self.timeCountView.start();
             });
-        },
-        gameEnd: function() {
-        },
-        gameReset: function() {
         }
     });
 })(this);
