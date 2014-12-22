@@ -6,8 +6,8 @@
  */
 var DIAMONDDASH = DIAMONDDASH || {};
 
-(function(win){
-    var ns = win.DIAMONDDASH || {};
+(function(window){
+    var ns = window.DIAMONDDASH || {};
 
 
     ns.Gem = Backbone.Model.extend({
@@ -26,6 +26,7 @@ var DIAMONDDASH = DIAMONDDASH || {};
         properties: {
             gridX: 7,
             gridY: 16,
+            shuffleFlg: false,
         },
         initialize: function(gemsView) {
             this.collection = this.createGemRandom();
@@ -83,6 +84,7 @@ var DIAMONDDASH = DIAMONDDASH || {};
                     }
                 }
             }
+            this.shuffleGem(gemsView);
         },
         checkAroundGem: function(x, y) {
             this.checkTopGem(x, y);
@@ -157,6 +159,21 @@ var DIAMONDDASH = DIAMONDDASH || {};
                     }
                 }
             }
+        },
+        shuffleGem: function(gemsView) {
+            if(this.erasableGemCount == 0) {
+                $('.alert').show();
+                this.properties.shuffleFlg = true;
+                this.initialize(gemsView);
+            }
+            if(gemsView != undefined && this.properties.shuffleFlg === true) {
+                setTimeout(function() {gemsView.$el.empty();}, 500);
+                setTimeout(function(){gemsView.setGemList();}, 600);
+                this.properties.shuffleFlg = false;
+                $('.alert .ok').on('click', function(){
+                    $('.alert').hide();
+                });
+            }
         }
     });
 })(this);
@@ -165,9 +182,9 @@ var DIAMONDDASH = DIAMONDDASH || {};
 /**
  * GemView
  */
-(function(win){
+(function(window){
     //
-    var ns = win.DIAMONDDASH || {};
+    var ns = window.DIAMONDDASH || {};
 
     ns.GemView = Backbone.View.extend({
         tagName: 'li',
@@ -185,17 +202,17 @@ var DIAMONDDASH = DIAMONDDASH || {};
 /**
  * GemsView
  */
-(function(win){
+(function(window){
     //
-    var ns = win.DIAMONDDASH || {};
+    var ns = window.DIAMONDDASH || {};
 
     ns.GemsView = Backbone.View.extend({
         el: $('#grid'),
         initialize: function() {
             this.collection = new ns.Gems();
-            this.gemListSet();
+            this.setGemList();
         },
-        gemListSet: function() {
+        setGemList: function() {
             var lis = [];
             var id = 0;
             var x, y;
@@ -219,16 +236,20 @@ var DIAMONDDASH = DIAMONDDASH || {};
                     if(this.collection.models[x][y].get('group') == undefined) {continue};
                     if(this.collection.models[x][y].get('group') == self.attributes.group && this.collection.models[x][y].get('erasable') == true) {
                         // $('#id' + x + '_' + y).addClass('anm_deleted');
-                        // $('#id' + x + '_' + y).removeClass('anm_deleted');
+                        // setTimeout(function(){
+                        //     $('anm_deleted').remove();
+
+                        // }, 500)
+                        $('#id' + x + '_' + y).addClass('anm_deleted');
                         $('#id' + x + '_' + y).remove();
                         delete this.collection.models[x][y];
+                        console.log($('#id' + x + '_' + y));
                         deletedGems[i] = [];
                         deletedGems[i].push(x,y);
                         i++;
                     }
                 }
             }
-            //修正 ここで毎回newしなくていい。
             var scoreView = new ns.ScoreView(deletedGems);
             this.gemFall(deletedGems, self);
         },
@@ -351,8 +372,8 @@ var DIAMONDDASH = DIAMONDDASH || {};
 /**
  * TimeCountView
  */
-(function(win){
-    var ns = win.DIAMONDDASH || {};
+(function(window){
+    var ns = window.DIAMONDDASH || {};
 
     ns.TimeCountView = Backbone.View.extend({
         el: $('.second'),
@@ -405,9 +426,9 @@ var DIAMONDDASH = DIAMONDDASH || {};
 /**
  * ScoreView
  */
-(function(win){
+(function(window){
     //
-    var ns = win.DIAMONDDASH || {};
+    var ns = window.DIAMONDDASH || {};
 
     ns.ScoreView = Backbone.View.extend({
         el: $('#score_point'),
@@ -443,9 +464,9 @@ var DIAMONDDASH = DIAMONDDASH || {};
 /**
  * GemsGameView
  */
-(function(win){
+(function(window){
     //
-    var ns = win.DIAMONDDASH || {};
+    var ns = window.DIAMONDDASH || {};
 
     ns.GemsGameView = Backbone.View.extend({
         el: $('#game'),
@@ -481,6 +502,6 @@ var DIAMONDDASH = DIAMONDDASH || {};
 /**
  * GameController
  */
-(function(win) {
-    var Game = new DIAMONDDASH.GemsGameView();
+(function(window) {
+    var game = new DIAMONDDASH.GemsGameView();
 })(this);

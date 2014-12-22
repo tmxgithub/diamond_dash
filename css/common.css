@@ -173,7 +173,7 @@ body {
 }
 .button {
   margin: 0;
-  padding: 7x 16px;
+  padding: 7px 16px;
   background-color: #459ec7;
   border-radius: 4px;
   border: 1px solid #13719c;
@@ -1042,7 +1042,6 @@ body {
 .time_status meter::-webkit-meter-bar {
   /* Let's animate this */
   animation: animate-stripes 5s linear infinite;
-  background-image: linear-gradient(135deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) 33%, rgba(0, 0, 0, 0.1) 33%, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
   background-size: 50px 25px;
 }
 .time_status meter::-webkit-meter-optimum-value {
@@ -1116,4 +1115,26 @@ body {
   -webkit-animation: animation_deleted 0.3s ease-in-out;
   animation: animation_deleted 0.3s ease-in-out;
   -webkit-animation-fill-mode: forwards;
+}
+
+.alert {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  width: 280px;
+  height: 100px;
+  margin: auto;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #666;
+  background-color: #fff;
+  color: #333;
+  text-align: center;
+}
+.alert .button .ok {
+  padding: 14px 40px;
 }
