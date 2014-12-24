@@ -794,6 +794,15 @@ body{
         color: #fff;
     }
 }
+.bottom_button{
+    position: absolute;
+    bottom: 4px;
+    right: 3%;
+    padding: 2px 16px;
+}
+#game_restart_button{
+    display: none;
+}
 @-webkit-keyframes animation_deleted{
     0%{-webkit-transform: scale(1);}
     50%{-webkit-transform: scale(1);}
@@ -805,22 +814,20 @@ body{
     -webkit-animation-fill-mode: forwards;
 }
 .alert{
-    display: none;
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: -104px;
+    left: 50%;
     z-index: 1000;
     width: 280px;
     height: 100px;
-    margin: auto;
-    padding: 20px;
+    margin-left: -140px;
+    padding: 50px 20px 20px 20px;
     border-radius: 10px;
     border: 1px solid #666;
     background-color: #fff;
     color: #333;
     text-align: center;
+    transition: all 0.2s ease-in-out 0.2s;
     .button{
         .ok{
             padding: 14px 40px;

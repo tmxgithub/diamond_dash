@@ -162,17 +162,17 @@ var DIAMONDDASH = DIAMONDDASH || {};
         },
         shuffleGem: function(gemsView) {
             if(this.erasableGemCount == 0) {
-                $('.alert').show();
+                $('.alert').css('top', '-32px');
                 this.properties.shuffleFlg = true;
                 this.initialize(gemsView);
             }
             if(gemsView != undefined && this.properties.shuffleFlg === true) {
                 setTimeout(function() {gemsView.$el.empty();}, 500);
                 setTimeout(function(){gemsView.setGemList();}, 600);
+                setTimeout(function(){
+                    $('.alert').css('top', '-104px');
+                }, 2000);
                 this.properties.shuffleFlg = false;
-                $('.alert .ok').on('click', function(){
-                    $('.alert').hide();
-                });
             }
         }
     });
@@ -476,6 +476,8 @@ var DIAMONDDASH = DIAMONDDASH || {};
             this.gemsView = new ns.GemsView();
             this.gameStart();
             this.gameRetry();
+            $('#game_pause_button').on('click', $.proxy(this.gamePause, this));
+            $('#game_restart_button').on('click', $.proxy(this.gameRestart, this));
         },
         gameStart: function() {
             var self = this;
@@ -495,6 +497,16 @@ var DIAMONDDASH = DIAMONDDASH || {};
                 self.scoreView.scoreClear();
                 self.timeCountView.start();
             });
+        },
+        gamePause: function() {
+            this.timeCountView.stop();
+            $('#game_pause_button').hide();
+            $('#game_restart_button').show();
+        },
+        gameRestart: function() {
+            this.timeCountView.start();
+            $('#game_restart_button').hide();
+            $('#game_pause_button').show();
         }
     });
 })(this);
