@@ -194,6 +194,7 @@ var DIAMONDDASH = DIAMONDDASH || {};
         },
         clickHandler: function(event) {
             this.trigger('gemClick', event, this);
+            // $('gem').removeClass('anm_deleted');
         }
     });
 })(this);
@@ -230,6 +231,7 @@ var DIAMONDDASH = DIAMONDDASH || {};
             var deletedGems = [];
             var i = 0;
             var x, y;
+            var scoreView;
             for(y = 0; y < this.collection.properties.gridY; y ++) {
                 for(x = 0; x < this.collection.properties.gridX; x ++) {
                     if(this.collection.models[x][y] == undefined) {continue};
@@ -237,10 +239,9 @@ var DIAMONDDASH = DIAMONDDASH || {};
                     if(this.collection.models[x][y].get('group') == self.attributes.group && this.collection.models[x][y].get('erasable') == true) {
                         // $('#id' + x + '_' + y).addClass('anm_deleted');
                         // setTimeout(function(){
-                        //     $('anm_deleted').remove();
-
-                        // }, 500)
-                        $('#id' + x + '_' + y).addClass('anm_deleted');
+                        //     $('#id' + x + '_' + y).remove();
+                        // }, 500);
+                        // $('#id' + x + '_' + y).addClass('anm_deleted');
                         $('#id' + x + '_' + y).remove();
                         delete this.collection.models[x][y];
                         console.log($('#id' + x + '_' + y));
@@ -250,7 +251,7 @@ var DIAMONDDASH = DIAMONDDASH || {};
                     }
                 }
             }
-            var scoreView = new ns.ScoreView(deletedGems);
+            ScoreView = new ns.ScoreView(deletedGems);
             this.gemFall(deletedGems, self);
         },
         gemFall: function(deletedGems, view) {
@@ -318,6 +319,7 @@ var DIAMONDDASH = DIAMONDDASH || {};
                         $('#id'+n+'_'+fallY_now).attr('id', 'id' + n + '_' + (fallY_max - fallCount));
                         this.collection.models[n][fallY_now].set('blockY', (fallY_max - fallCount));
                         this.collection.models[n][fallY_now].set('id', 'id' + n + '_' + (fallY_max - fallCount));
+                        // this.collection.models[n][fallY_now].removeClass('anm_deleted');
                         this.collection.models[n][(fallY_max - fallCount)] = this.collection.models[n][fallY_now];
                         delete this.collection.models[n][fallY_now];
                         emptyGrid.push([n, fallY_now]);
@@ -329,6 +331,7 @@ var DIAMONDDASH = DIAMONDDASH || {};
                         $('#id'+n+'_'+fallY_min).attr('id', 'id' + n + '_' + (fallY_min + gemXY[0][n]));
                         this.collection.models[n][fallY_min].set('blockY', (fallY_min + gemXY[0][n]));
                         this.collection.models[n][fallY_min].set('id', 'id' + n + '_' + (fallY_min + gemXY[0][n]));
+                        // this.collection.models[n][fallY_min].removeClass('anm_deleted');
                         this.collection.models[n][(fallY_min + gemXY[0][n])] = this.collection.models[n][fallY_min];
                         delete this.collection.models[n][fallY_min];
                         emptyGrid.push([n, fallY_min]);
@@ -474,39 +477,43 @@ var DIAMONDDASH = DIAMONDDASH || {};
             this.timeCountView = new ns.TimeCountView();
             this.scoreView = new ns.ScoreView();
             this.gemsView = new ns.GemsView();
-            this.gameStart();
-            this.gameRetry();
             $('#game_pause_button').on('click', $.proxy(this.gamePause, this));
+            $('#game_pause_button').on('click', function(){
+                $('#game_pause_button').hide();
+                $('#game_restart_button').show();
+                $('#mask_layer').show();
+            });
             $('#game_restart_button').on('click', $.proxy(this.gameRestart, this));
-        },
-        gameStart: function() {
-            var self = this;
+            $('#game_restart_button').on('click', function(){
+                $('#game_restart_button').hide();
+                $('#game_pause_button').show();
+                $('#mask_layer').hide();
+            });
+            $('.game_start').on('click', $.proxy(this.gameStart, this));
             $('.game_start').on('click', function(){
                 $('#mask_layer').hide();
                 $('.game_start').hide();
-                self.timeCountView.start();
             });
-        },
-        gameRetry: function() {
-            var self = this;
+            $('.re_start').on('click', $.proxy(this.gameRetry, this));
             $('.re_start').on('click', function(){
                 $('#mask_layer').hide();
                 $('#timeup').hide();
                 $('.re_start').hide();
                 $('#score_point').removeClass('result');
-                self.scoreView.scoreClear();
-                self.timeCountView.start();
             });
+        },
+        gameStart: function() {
+            this.timeCountView.start();
+        },
+        gameRetry: function() {
+            this.scoreView.scoreClear();
+            this.timeCountView.start();
         },
         gamePause: function() {
             this.timeCountView.stop();
-            $('#game_pause_button').hide();
-            $('#game_restart_button').show();
         },
         gameRestart: function() {
             this.timeCountView.start();
-            $('#game_restart_button').hide();
-            $('#game_pause_button').show();
         }
     });
 })(this);
